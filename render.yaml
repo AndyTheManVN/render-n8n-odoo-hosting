@@ -1,9 +1,9 @@
 services:
   - type: web
     name: n8n
-    runtime: docker
+    env: docker
     plan: free
-    repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
+    repo: https://github.com/AndyTheManVN/render-n8n-odoo-hosting.git
     branch: main
     dockerContext: .
     dockerfilePath: Dockerfile-n8n
@@ -38,9 +38,9 @@ services:
 
   - type: web
     name: odoo
-    runtime: docker
+    env: docker
     plan: free
-    repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
+    repo: https://github.com/AndyTheManVN/render-n8n-odoo-hosting.git
     branch: main
     dockerContext: .
     dockerfilePath: Dockerfile-odoo
@@ -56,4 +56,3 @@ services:
         value: "your_supabase_odoo_password"
       - key: DB_NAME
         value: "postgres"
-
