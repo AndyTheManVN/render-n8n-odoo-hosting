@@ -50,7 +50,7 @@ services:
     runtime: docker
     plan: free
     dockerCommand: ""
-    repo: <https://github.com/YOUR_USERNAME/render-n8n-odoo>
+    repo: https://github.com/AndyTheManVN/render-n8n-odoo-hosting.git
     branch: main
     dockerContext: .
     image: odoo:17.0  # Image chính thức
