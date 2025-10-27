@@ -1,14 +1,13 @@
-
 services:
   - type: web
     name: n8n
     runtime: docker
     plan: free
-    dockerCommand: "" 
-    repo: https://github.com/AndyTheManVN/render-n8n-odoo-hosting.git  
-    dockerContext: .  
-    image: n8nio/n8n:latest 
-    region: singapore 
+    repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
+    branch: main
+    dockerContext: .
+    image: n8nio/n8n:latest
+    region: singapore
     numInstances: 1
     healthCheckPath: /healthz
     envVars:
@@ -17,12 +16,12 @@ services:
       - key: N8N_BASIC_AUTH_USER
         value: admin
       - key: N8N_BASIC_AUTH_PASSWORD
-        sync: false  
+        value: yourpassword  # Thay bằng password mạnh, hoặc dùng secret
       - key: N8N_HOST
         fromService:
           type: web
           name: n8n
-          property: host  
+          property: host
       - key: N8N_PORT
         value: 5678
       - key: N8N_PROTOCOL
@@ -30,39 +29,39 @@ services:
       - key: DB_TYPE
         value: postgresdb
       - key: DB_POSTGRESDB_HOST
-        value: SUPABASE_N8N_HOST  
+        value: your_supabase_n8n_host  # Thay bằng host từ Supabase
       - key: DB_POSTGRESDB_PORT
         value: 5432
       - key: DB_POSTGRESDB_DATABASE
-        value: postgres  
+        value: postgres  # Default Supabase DB
       - key: DB_POSTGRESDB_USER
         value: postgres
       - key: DB_POSTGRESDB_PASSWORD
-        sync: false  
+        value: your_supabase_n8n_password  # Thay bằng password từ Supabase
       - key: WEBHOOK_URL
-        value: https://YOUR_N8N_DOMAIN.onrender.com/  
-        value: Asia/Bangkok
+        value: https://your_n8n_domain.onrender.com/  # Cập nhật sau khi deploy
+      - key: GENERIC_TIMEZONE
+        value: Asia/Bangkok  # Đảm bảo chỉ định nghĩa 1 lần
 
   - type: web
     name: odoo
     runtime: docker
     plan: free
-    dockerCommand: ""
-    repo: https://github.com/AndyTheManVN/render-n8n-odoo-hosting.git
+    repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
     branch: main
     dockerContext: .
-    image: odoo:17.0  
+    image: odoo:17.0  # Đảm bảo định dạng đúng
     region: singapore
     numInstances: 1
     healthCheckPath: /web/health
     envVars:
       - key: HOST
-        value: SUPABASE_ODOO_HOST  
+        value: your_supabase_odoo_host  # Thay bằng host từ Supabase
       - key: PORT
         value: 5432
       - key: USER
         value: postgres
       - key: PASSWORD
-        sync: false  
+        value: your_supabase_odoo_password  # Thay bằng password từ Supabase
       - key: DB_NAME
-        value: postgres  
+        value: postgres  # Default Supabase DB
