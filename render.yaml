@@ -1,7 +1,7 @@
 services:
   - type: web
     name: n8n
-    runtime: docker
+    runtime: image # Sử dụng image Docker có sẵn
     plan: free
     repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
     branch: main
@@ -45,7 +45,7 @@ services:
 
   - type: web
     name: odoo
-    runtime: docker
+    runtime: image # Sử dụng image Docker có sẵn
     plan: free
     repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
     branch: main
