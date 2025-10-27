@@ -1,21 +1,14 @@
 services:
   - type: web
     name: n8n
-    runtime: docker
+    runtime: image
     plan: free
-    repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
-    branch: main
-    dockerContext: .
+    image: n8nio/n8n:latest
     region: singapore
-    envVars:
-      - key: N8N_BASIC_AUTH_ACTIVE
-        value: "true"
-
+    
   - type: web
     name: odoo
-    runtime: docker
+    runtime: image
     plan: free
-    repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
-    branch: main
-    dockerContext: .
+    image: odoo:17.0
     region: singapore
