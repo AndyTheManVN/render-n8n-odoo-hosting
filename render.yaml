@@ -1,0 +1,70 @@
+
+services:
+  - type: web
+    name: n8n
+    runtime: docker
+    plan: free
+    dockerCommand: ""  # Không cần nếu dùng image default
+    repo: https://github.com/AndyTheManVN/render-n8n-odoo-hosting.git  # Thay bằng repo của bạn
+    branch: main
+    dockerContext: .  # Không cần Dockerfile vì pull image
+    image: n8nio/n8n:latest  # Image chính thức
+    region: singapore  # Gần Việt Nam/Lào
+    numInstances: 1
+    healthCheckPath: /healthz
+    envVars:
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: true
+      - key: N8N_BASIC_AUTH_USER
+        value: admin
+      - key: N8N_BASIC_AUTH_PASSWORD
+        sync: false  # Set secret sau (pass mạnh)
+      - key: N8N_HOST
+        fromService:
+          type: web
+          name: n8n
+          property: host  # Tự lấy domain .onrender.com
+      - key: N8N_PORT
+        value: 5678
+      - key: N8N_PROTOCOL
+        value: https
+      - key: DB_TYPE
+        value: postgresdb
+      - key: DB_POSTGRESDB_HOST
+        value: SUPABASE_N8N_HOST  # Thay sau (từ Supabase)
+      - key: DB_POSTGRESDB_PORT
+        value: 5432
+      - key: DB_POSTGRESDB_DATABASE
+        value: postgres  # Default Supabase
+      - key: DB_POSTGRESDB_USER
+        value: postgres
+      - key: DB_POSTGRESDB_PASSWORD
+        sync: false  # Secret từ Supabase
+      - key: WEBHOOK_URL
+        value: https://YOUR_N8N_DOMAIN.onrender.com/  # Tự cập nhật sau
+      - key: GENERIC_TIMEZONE
+        value: Asia/Bangkok
+
+  - type: web
+    name: odoo
+    runtime: docker
+    plan: free
+    dockerCommand: ""
+    repo: <https://github.com/YOUR_USERNAME/render-n8n-odoo>
+    branch: main
+    dockerContext: .
+    image: odoo:17.0  # Image chính thức
+    region: singapore
+    numInstances: 1
+    healthCheckPath: /web/health
+    envVars:
+      - key: HOST
+        value: SUPABASE_ODOO_HOST  # Thay sau
+      - key: PORT
+        value: 5432
+      - key: USER
+        value: postgres
+      - key: PASSWORD
+        sync: false  # Secret
+      - key: DB_NAME
+        value: postgres  # Default, hoặc tùy chỉnh
