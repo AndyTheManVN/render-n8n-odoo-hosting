@@ -1,14 +1,59 @@
 services:
   - type: web
     name: n8n
-    runtime: image
+    runtime: docker
     plan: free
-    image: n8nio/n8n:latest
+    repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
+    branch: main
+    dockerContext: .
+    dockerfilePath: Dockerfile-n8n
     region: singapore
-    
+    envVars:
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: "true"
+      - key: N8N_BASIC_AUTH_USER
+        value: "admin"
+      - key: N8N_BASIC_AUTH_PASSWORD
+        value: "yourpassword"
+      - key: N8N_HOST
+        value: your-n8n.onrender.com
+      - key: N8N_PORT
+        value: "5678"
+      - key: N8N_PROTOCOL
+        value: "https"
+      - key: DB_TYPE
+        value: "postgresdb"
+      - key: DB_POSTGRESDB_HOST
+        value: "your_supabase_n8n_host"
+      - key: DB_POSTGRESDB_PORT
+        value: "5432"
+      - key: DB_POSTGRESDB_DATABASE
+        value: "postgres"
+      - key: DB_POSTGRESDB_USER
+        value: "postgres"
+      - key: DB_POSTGRESDB_PASSWORD
+        value: "your_supabase_n8n_password"
+      - key: GENERIC_TIMEZONE
+        value: "Asia/Bangkok"
+
   - type: web
     name: odoo
-    runtime: image
+    runtime: docker
     plan: free
-    image: odoo:17.0
+    repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
+    branch: main
+    dockerContext: .
+    dockerfilePath: Dockerfile-odoo
     region: singapore
+    envVars:
+      - key: HOST
+        value: "your_supabase_odoo_host"
+      - key: PORT
+        value: "5432"
+      - key: USER
+        value: "postgres"
+      - key: PASSWORD
+        value: "your_supabase_odoo_password"
+      - key: DB_NAME
+        value: "postgres"
+

@@ -1,0 +1,2 @@
+# Dockerfile-odoo
+FROM odoo:17.0
