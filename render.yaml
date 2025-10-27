@@ -6,7 +6,9 @@ services:
     repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
     branch: main
     dockerContext: .
-    image: n8nio/n8n:latest
+    image:
+      name: n8nio/n8n
+      tag: latest         # Sử dụng thẻ 'latest' để luôn có phiên bản mới nhất
     region: singapore
     numInstances: 1
     healthCheckPath: /healthz
@@ -50,7 +52,9 @@ services:
     repo: https://github.com/AndyTheMaVN/render-n8n-odoo-hosting.git
     branch: main
     dockerContext: .
-    image: odoo:17.0  # Đảm bảo định dạng đúng
+    image:
+      name: odoo
+      tag: 17.0  # Sử dụng phiên bản Odoo 17.0
     region: singapore
     numInstances: 1
     healthCheckPath: /web/health
